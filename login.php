@@ -1,17 +1,19 @@
 <?php
-include_once "include/common.php";
 
-// there is authentication can be done here, not in V1 yet ----------
+require_once "fun.php";
 
 $r		  = 0;
-$input	  = $_REQUEST["input"];
-$password = $_REQUEST["password"];
-$type     = $_REQUEST["type"];
+$input	  = $_POST["input"];
+$pwd      = md5(md5($_POST["password"]));
 
 //Login validation
-$r        = userLogin($login_type,$input,$pwd);
-return $r;
-
+$r        = userLogin($input,$pwd);
+if($r){
+	$result=array("token"=>$r);
+	json(1,"success",$result);
+}else{
+	json(0,"fail","");
+}
 
 
 
